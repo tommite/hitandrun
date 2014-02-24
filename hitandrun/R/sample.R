@@ -1,4 +1,4 @@
-har <- function(x0, constr, N, thin=1, homogeneous=FALSE, transform=NULL) {
+har <- function(x0, constr, N, thin=1, homogeneous=FALSE, transform=NULL, boundary=FALSE) {
   n <- length(x0)
   m <- nrow(constr$constr)
 
@@ -18,7 +18,7 @@ har <- function(x0, constr, N, thin=1, homogeneous=FALSE, transform=NULL) {
     as.integer(n - 1), as.double(x0),
     as.integer(m), as.double(constr$constr), as.double(constr$rhs),
     as.integer(N), as.integer(thin),
-    samples=matrix(0.0, nrow=N/thin, ncol=n),
+    samples=matrix(0.0, nrow=N/thin, ncol=n), as.integer(boundary),
     NAOK=FALSE, DUP=FALSE, PACKAGE="hitandrun"
   )$samples
   xN <- samples[N/thin, , drop=TRUE]

@@ -1,8 +1,8 @@
 #include "har.h"
 
 void hitandrun_har(int *_n, double *_x0, int *_m, double *_constr, double *rhs,
-		int *_niter, int *_thin, double *_result) {
-	int const n = *_n, m = *_m, niter = *_niter, thin = *_thin;
+		   int *_niter, int *_thin, double *_result, int *_border) {
+  int const n = *_n, m = *_m, niter = *_niter, thin = *_thin, border = *_border;
 	const int nh = n + 1; // needed for BLAS
 	const int inc1 = 1; // needed for BLAS
 	Matrix constr = { _constr, m, n + 1 };
@@ -36,7 +36,8 @@ void hitandrun_har(int *_n, double *_x0, int *_m, double *_constr, double *rhs,
 		if (l[0] == l[1]) { // FIXME: is this an error?
 			error("Bounding function gave empty interval");
 		}
-		double v = l[0] + unif_rand() * (l[1] - l[0]);
+		double mult = border ? 1.0 : unif_rand();
+		double v = l[0] + mult * (l[1] - l[0]);
 		F77_CALL(daxpy)(&nh, &v, d, &inc1, x, &inc1); // x := vd + x
 
 		if ((i + 1) % thin == 0) { // write result

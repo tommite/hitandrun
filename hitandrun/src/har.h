@@ -83,10 +83,11 @@ void hitandrun_bound(Matrix *constr, double *rhs, double *x, double *d, double *
  * @param niter: number of iterations to sample for
  * @param thin: thinning interval (will return N=niter/thin samples)
  * @param result: pre-allocated N * (n + 1) result matrix
+ * @param border: whether to include only border points (1) or not (0)
  */
 void hitandrun_har(int *_n, double *_x0,
-		int *_m, double *_constr, double *rhs,
-		int *_niter, int *_thin, double *_result);
+		   int *_m, double *_constr, double *rhs,
+		   int *_niter, int *_thin, double *_result, int *border);
 
 /**
  * Rejection sampling from the convex region Ax <= b, by generating uniform

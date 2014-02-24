@@ -74,13 +74,13 @@ har.init <- function(constr,
     thin = thin)
 }
 
-har.run <- function(state, n.samples) {
+har.run <- function(state, n.samples, boundary=FALSE) {
   result <- with(state, {
     n <- length(x0) - 1
     if (n == 0) {
       list(samples = matrix(rep(basis$translate, each=n.samples), nrow=n.samples), xN = 1)
     } else {
-      har(x0, constr, N=n.samples * thin, thin=thin, homogeneous=TRUE, transform=transform)
+      har(x0, constr, N=n.samples * thin, thin=thin, homogeneous=TRUE, transform=transform, boundary=boundary)
     }
   })
   state$x0 <- result$xN
@@ -92,8 +92,8 @@ hitandrun <- function(constr,
     thin.fn = function(n) { ceiling(log(n + 1)/4 * n^3) },
     thin = NULL,
     x0.randomize = FALSE, x0.method="slacklp",
-    x0 = NULL) {
-  state <- har.init(constr, thin.fn, thin, x0.randomize, x0.method, x0)
-  result <- har.run(state, n.samples)
-  result$samples
+    x0 = NULL, boundary=FALSE) {
+    state <- har.init(constr, thin.fn, thin, x0.randomize, x0.method, x0)
+    result <- har.run(state, n.samples, boundary)
+    result$samples
 }
