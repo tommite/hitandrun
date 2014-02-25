@@ -93,6 +93,7 @@ hitandrun <- function(constr,
     thin = NULL,
     x0.randomize = FALSE, x0.method="slacklp",
     x0 = NULL, boundary=FALSE) {
+    stopifnot (is.null(thin) || thin >= 1) # otherwise get just rnd error msgs
     state <- har.init(constr, thin.fn, thin, x0.randomize, x0.method, x0)
     result <- har.run(state, n.samples, boundary)
     result$samples

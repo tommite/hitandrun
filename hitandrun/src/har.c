@@ -24,6 +24,7 @@ void hitandrun_har(int *_n, double *_x0, int *_m, double *_constr, double *rhs,
 	double d[n + 1];
 	d[n] = 0; // homogeneous coordinates -- final direction component always 0.
 	double l[2];
+	double v;
 
 	GetRNGstate(); // enable use of RNGs
 
@@ -36,8 +37,15 @@ void hitandrun_har(int *_n, double *_x0, int *_m, double *_constr, double *rhs,
 		if (l[0] == l[1]) { // FIXME: is this an error?
 			error("Bounding function gave empty interval");
 		}
-		double mult = border ? 1.0 : unif_rand();
-		double v = l[0] + mult * (l[1] - l[0]);
+		if (!border) {
+		  v = l[0] + unif_rand() * (l[1] - l[0]);
+		} else { // border
+		  if (abs(l[0]) >= abs(l[1])) {
+		    v = l[0];
+		  } else {
+		    v = l[1];
+		  }
+		}
 		F77_CALL(daxpy)(&nh, &v, d, &inc1, x, &inc1); // x := vd + x
 
 		if ((i + 1) % thin == 0) { // write result
