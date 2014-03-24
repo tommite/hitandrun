@@ -35,9 +35,10 @@ static inline void writeRow(Matrix *m, int i, double *x) {
  * @param constr: the matrix A.
  * @param rhs: the vector b.
  * @param x: the vector x.
+ * @param epsilon: precision of the equality check
  * @return 1 if x is within the space, 0 otherwise.
  */
-int hitandrun_hit(Matrix *constr, double *rhs, double *x);
+int hitandrun_hit(Matrix *constr, double *rhs, double *x, double epsilon);
 
 /**
  * Generate a random point on the n-dimensional unit sphere.

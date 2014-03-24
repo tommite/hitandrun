@@ -25,7 +25,7 @@ void hitandrun_bbReject(int *_n, double *lb, double *ub,
 			for (int j = 0; j < n; ++j) {
 				x[j] = lb[j] + d[j] * unif_rand();
 			}
-			if (hitandrun_hit(&constr, rhs, x)) {
+			if (hitandrun_hit(&constr, rhs, x, 0.0)) {
 				wasHit = 1;
 				writeRow(&result, i, x);
 			} else {

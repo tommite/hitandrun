@@ -8,6 +8,8 @@ void hitandrun_har(int *_n, double *_x0, int *_m, double *_constr, double *rhs,
 	Matrix constr = { _constr, m, n + 1 };
 	Matrix result = { _result, niter / thin, n + 1 };
 
+	double epsilon = border ? 1e15 : 0.0;
+
 	// Check arguments for sanity
 	if (_x0[n] != 1.0) {
 		error("The (n + 1)-st component of x0 must be 1");
@@ -15,7 +17,7 @@ void hitandrun_har(int *_n, double *_x0, int *_m, double *_constr, double *rhs,
 	if (niter % thin != 0) {
 		error("niter % thin != 0");
 	}
-	if (!hitandrun_hit(&constr, rhs, _x0)) {
+	if (!hitandrun_hit(&constr, rhs, _x0, epsilon)) {
 		error("The starting point must be inside the region");
 	}
 
