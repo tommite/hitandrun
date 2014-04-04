@@ -36,8 +36,8 @@ void hitandrun_har(int *_n, double *_x0, int *_m, double *_constr, double *rhs,
 		if (!R_FINITE(l[0]) || !R_FINITE(l[1])) {
 			error("Bounding function gave NA bounds [%f, %f]", l[0], l[1]);
 		}
-		//		if (!border && (l[0] == l[1])) { // FIXME: is this an error?
-		//		error("Bounding function gave empty interval");
+		//if (!border && (l[0] == l[1])) { // FIXME: is this an error?
+		// error("Bounding function gave empty interval");
 		//}
 		if (!border) {
 		  v = l[0] + unif_rand() * (l[1] - l[0]);
